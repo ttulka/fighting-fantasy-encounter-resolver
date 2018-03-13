@@ -80,7 +80,14 @@ const Encounter = function(hero, enemy) {
 
 function init() {
 
+  var running = false;
+
   const fight = () => {
+    if (running) {
+      alert('The fight has already begun - be patient!');
+      return; 
+    }
+    running = true;
     
     const hero = new Player(
       parseInt($("input[name='hero.skill']").val()), 
@@ -103,12 +110,13 @@ function init() {
     const won = (result) => {
       showResult(result);
       resultDiv.append(`<p class="finished success">Your won this fight with stamina <b>${result.hero.stamina}</b></p>`);
+      running = false;
     }
     const failed = (result) => {
       showResult(result);
-      resultDiv.append(`<p class="finished failed">You failed. Your mission finished here...</p>`);    
+      resultDiv.append(`<p class="finished failed">You failed. Your mission finished here...</p>`);
+      running = false;    
     }             
-    
     encounter.startFight(showResult, won, failed);
   }
   
