@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fighting Fantasy Encounter Resolver</title>
+  <meta charset="UTF-8">
+  
+  <link rel="stylesheet" href="main.css">
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="encounter.js"></script>  
+</head>
+<body>
+
+  <h1>You have to fight!</h1>
+
+  <form action="" id="parameters">
+    <table border="0">
+      <tr>
+        <td></td>
+        <td>SKILL</td>
+        <td>STAMINA</td>
+      </tr>
+      <tr>
+        <th>YOU</th>
+        <td><input name="hero.skill" size="3"></td>
+        <td><input name="hero.stamina" size="3"></td>
+      </tr>
+      <tr>
+        <th>ENEMY</th>
+        <td><input name="enemy.skill" size="3"></td>
+        <td><input name="enemy.stamina" size="3"></td>
+      </tr>
+    </table>
+    
+    <p><button type="button" id="start">Fight!</button></p>
+  </form>
+  
+  <div id="result">
+  </div>
+
+</body>
+</html>

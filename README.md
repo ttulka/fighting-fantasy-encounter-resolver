@@ -1,2 +1,2 @@
-# fighting-fantasy-encounter-resolver
-Resolver for Fighting Fantasy encounters
+# Resolver for Fighting Fantasy Encounters
+

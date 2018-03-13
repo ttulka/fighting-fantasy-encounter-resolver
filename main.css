@@ -1,0 +1,45 @@
+body {
+  padding: 1em;
+  font-size: 2vw;
+}
+
+td, th {
+  padding: 0.3em;
+  text-align: left;
+}
+
+input {
+  padding: 0.5em;
+  border: 2px solid #666;
+  font-size: 120%;
+  font-weight: bold;
+  color: olive;
+}
+
+button {
+  padding: 1em;
+  font-size: 150%
+}
+
+.result.hero {
+  color: #86d38f;
+}
+.result.enemy {
+  color: #d38686;
+}
+.result.remise {
+  color: #86a8d3;
+}
+
+.finished {
+  font-size: 120%;
+}
+.finished b {
+  font-size: 150%;
+}
+.finished.success {
+  color: #0e9600;
+}
+.finished.failed {
+  color: #d13c2c;
+}
