@@ -1,80 +1,77 @@
-const Player = function(skill, stamina) {  
-  this.skill = skill;
-  this.stamina = stamina;
+class Player {
+
+  constructor(skill, stamina) {  
+    this.skill = skill;
+    this.stamina = stamina;
+  }
   
-  function* attackGenerator() {
-    const dice = () => Math.floor(Math.random() * 6) + 1;
+  attack() {
+    function* attackGenerator(skill, stamina) {
+      const dice = () => Math.floor(Math.random() * 6) + 1;
+      
+      while (stamina > 0) {    
+        yield skill + dice();
+      }
+    }  
+    const attackGen = attackGenerator(this.skill, this.stamina);
     
-    while (stamina > 0) {    
-      yield skill + dice();
-    }
-  }  
-  const attackGen = attackGenerator();
-  
-  const attack = () => attackGen.next().value;
-  
-  return {
-    skill,
-    stamina,
-    
-    attack
+    return attackGen.next().value;
   }
 }
 
-const Encounter = function(hero, enemy) {  
-  this.hero = hero;
-  this.enemy = enemy;
+class Encounter {
   
-  const WinnerEnum = {
-    HERO: "HERO",
-    ENEMY: "ENEMY",
-    REMISE: "REMISE"
-  }
+  constructor(hero, enemy) {  
+    this.hero = hero;
+    this.enemy = enemy;
+    
+    this.WinnerEnum = {
+      HERO: "HERO",
+      ENEMY: "ENEMY",
+      REMISE: "REMISE"
+    }
+  } 
   
-  const fight = (result, won, failed) => {
-    let heroAttack = hero.attack();
-    let enemyAttack = enemy.attack();
+  fight(result, won, failed) {
+    let heroAttack = this.hero.attack();
+    let enemyAttack = this.enemy.attack();
         
     let winner;
     
     if (heroAttack > enemyAttack) {
-      enemy.stamina -= heroAttack - enemyAttack;
-      winner = WinnerEnum.HERO;
+      this.enemy.stamina -= heroAttack - enemyAttack;
+      winner = this.WinnerEnum.HERO;
       
     } else if (heroAttack < enemyAttack) {
-      hero.stamina -= enemyAttack - heroAttack;
-      winner = WinnerEnum.ENEMY;
+      this.hero.stamina -= enemyAttack - heroAttack;
+      winner = this.WinnerEnum.ENEMY;
        
     } else {
-      winner = WinnerEnum.REMISE;
+      winner = this.WinnerEnum.REMISE;
     } 
   
     let res = {
       winner,
       hero: {
         attack: heroAttack,
-        stamina: hero.stamina 
+        stamina: this.hero.stamina 
       },
       enemy: {
         attack: enemyAttack,
-        stamina: enemy.stamina 
+        stamina: this.enemy.stamina 
       }
     };
     
-    if (enemy.stamina <= 0) {
+    if (this.enemy.stamina <= 0) {
       won(res);
       
-    } else if (hero.stamina <= 0) {
+    } else if (this.hero.stamina <= 0) {
       failed(res);
       
     } else {
       result(res);
-      setTimeout(() => fight(result, won, failed), 1000);
+      setTimeout(() => this.fight(result, won, failed), 1000);
     }
-  }
-  
-  return {
-    startFight: fight
   }
 }
 
@@ -117,7 +114,7 @@ function init() {
       resultDiv.append(`<p class="finished failed">You failed. Your mission finished here...</p>`);
       running = false;    
     }             
-    encounter.startFight(showResult, won, failed);
+    encounter.fight(showResult, won, failed);
   }
   
   $("#start").click(fight); 
